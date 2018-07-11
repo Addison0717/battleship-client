@@ -6,6 +6,7 @@ import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
 import Paper from 'material-ui/Paper'
 import Board from './Board'
+import BoatLocation from './BoatLocation'
 import './GameDetails.css'
 
 class GameDetails extends PureComponent {
@@ -22,12 +23,31 @@ class GameDetails extends PureComponent {
   makeMove = (toRow, toCell) => {
     const {game, updateGame} = this.props
 
-    const board = game.board.map(
+    // const board = game.board.map(
+    //   (row, rowIndex) => row.map((cell, cellIndex) => {
+    //     if (rowIndex === toRow && cellIndex === toCell) return game.turn
+    //     else return cell
+    //   })
+    // )
+
+    const board = game.players.filter(x => {return x.currentUser === this.props.userId})[0].myBoard.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
         if (rowIndex === toRow && cellIndex === toCell) return game.turn
         else return cell
       })
     )
+
+
+    const otherPlayerBoatLocation = game.players.filter(x => {return x.currentUser !== this.props.userId})[0].boatLocation.map(
+      (row, rowIndex) => row.map((cell, cellIndex) => {
+        if (rowIndex === toRow && cellIndex === toCell && cell === "b") return console.log( "you hit the boat" )
+        else return cell
+      })
+    )
+
+    // console.log(otherPlayerBoatLocation)
+    // calculateHit()
+
     updateGame(game.id, board)
   }
 
@@ -37,7 +57,7 @@ class GameDetails extends PureComponent {
 
     const {game, users, authenticated, userId} = this.props
 
-    console.log('CURRENT USER', userId)
+    console.log('USER ID', userId)
    
 
     if (!authenticated) return (
@@ -47,7 +67,7 @@ class GameDetails extends PureComponent {
     if (game === null || users === null) return 'Loading...'
     if (!game) return 'Not found'
 
-    const player = game.players.find(p => p.userId === userId)
+    const player = game.players.find(p => p.userId === userId)  
 
     const winner = game.players
       .filter(p => p.symbol === game.winner)
@@ -64,6 +84,9 @@ class GameDetails extends PureComponent {
         <div>It's your turn!</div>
       }
 
+
+
+      {/* FIX SECTION SO ONLY PERSON WHO DIDNT START GAME CAN JOIN */}
       {
         game.status === 'pending' &&
         game.players.map(p => p.userId).indexOf(userId) === -1 &&
@@ -80,20 +103,11 @@ class GameDetails extends PureComponent {
       {
         game.status !== 'pending' &&
         <div>
-          <Board board={game.board} makeMove={this.makeMove} />
+          <Board board={ game.players.filter(x => {return x.currentUser === userId})[0].myBoard } makeMove={this.makeMove} />
           <br/>
-
-
-          {/* <Board board={ game.players.filter(x => {return x.id === userId}).map(x => {return x.boatLocation}) } /> */}
-          {/* <Board board={ game.players.filter(x => {return x.userId === userId})[0].boatLocation } /> */}
-
-
-          { console.log('MAP AND FILTER', game.players.filter(x => {return x.userId === userId})) }
-          {/* { console.log('HARD CODE', game.players[0].boatLocation) } */}
+          <BoatLocation board={ game.players.filter(x => {return x.currentUser === userId})[0].boatLocation } />
         </div>
       }
-
-      {console.log(game)}
     </Paper>)
   }
 }

@@ -17,3 +17,5 @@ export default ({board, makeMove}) => board.map((cells, rowIndex) =>
     {cells.map((symbol, cellIndex) => renderCel(makeMove, rowIndex, cellIndex,symbol,false))}
   </div>
 )
+
+// game.players.filter(x => {return x.currentUser === userId})[0].myBoard
