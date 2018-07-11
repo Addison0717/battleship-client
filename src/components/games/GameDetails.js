@@ -16,6 +16,7 @@ class GameDetails extends PureComponent {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
     }
+    // this.props.getGames()
   }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
@@ -29,6 +30,9 @@ class GameDetails extends PureComponent {
     //     else return cell
     //   })
     // )
+
+    // this.props.getGames()
+    // this.props.getUsers()
 
     const board = game.players.filter(x => {return x.currentUser === this.props.userId})[0].myBoard.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
