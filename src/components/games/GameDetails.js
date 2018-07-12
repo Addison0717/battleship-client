@@ -21,6 +21,10 @@ class GameDetails extends PureComponent {
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
+
+    console.log('PROPS ON MAKE MOVE',this.props)
+
+
     const {game, updateGame} = this.props
 
     const board = game.players.filter(x => {return x.currentUser === this.props.userId})[0].myBoard.map(
@@ -58,9 +62,10 @@ class GameDetails extends PureComponent {
     if (game === null || users === null) return 'Loading...'
     if (!game) return 'Not found'
 
-    const player = game.players.find(p => p.id === userId)  
+    const player = game.players.find(p => p.currentUser === userId)  
 
     console.log('PLAYER', player)
+    console.log('GAME PLAYERS', game.players)
 
     const winner = game.winner
 
