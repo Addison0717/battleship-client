@@ -80,10 +80,9 @@ class GameDetails extends PureComponent {
         <div>It's your turn!</div>
       }
 
-      {/* FIX SECTION SO ONLY PERSON WHO DIDNT START GAME CAN JOIN */}
       {
         game.status === 'pending' &&
-        game.players.map(p => p.userId).indexOf(userId) === -1 &&
+        game.players.map(p => p.currentUser).indexOf(userId) === -1 &&
         <button onClick={this.joinGame}>Join Game</button>
       }
 
@@ -105,6 +104,7 @@ class GameDetails extends PureComponent {
         <div>
           <Board board={ game.players.filter(x => {return x.currentUser === userId})[0].myBoard } makeMove={this.makeMove} />
           <br/>
+          <h1>Your Boat:</h1>
           <BoatLocation board={ game.players.filter(x => {return x.currentUser === userId})[0].boatLocation } />
         </div>
       }

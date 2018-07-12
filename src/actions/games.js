@@ -74,6 +74,9 @@ export const updateGame = (gameId, board, winner) => (dispatch, getState) => {
 
   if (isExpired(jwt)) return dispatch(logout())
 
+  console.log('BOARD PASSED IN',board)
+  console.log('WINNER PASSED IN',winner)
+
   request
     .patch(`${baseUrl}/games/${gameId}`)
     .set('Authorization', `Bearer ${jwt}`)
