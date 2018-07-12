@@ -47,9 +47,15 @@ class GameDetails extends PureComponent {
       })
     )
 
-    console.log('WIN?',winHolder)
+    console.log('WIN?', winHolder)
 
-    updateGame(game.id, board)
+    if (winHolder === true) {
+      game.winner = this.props.userId
+    }
+
+    console.log(game)
+
+    updateGame(game.id, board, game.winner)
   }
 
 
@@ -58,7 +64,7 @@ class GameDetails extends PureComponent {
 
     const {game, users, authenticated, userId} = this.props
 
-    console.log('USER ID', userId)
+    // console.log('USER ID', userId)
    
 
     if (!authenticated) return (
@@ -70,9 +76,13 @@ class GameDetails extends PureComponent {
 
     const player = game.players.find(p => p.userId === userId)  
 
-    const winner = game.players
-      .filter(p => p.symbol === game.winner)
-      .map(p => p.userId)[0]
+    console.log('PLAYER',player)
+
+    // const winner = game.players
+    //   .filter(p => p.symbol === game.winner)
+    //   .map(p => p.userId)[0]
+
+    const winner = game.winner
 
     return (<Paper className="outer-paper">
       <h1>Game #{game.id}</h1>
@@ -82,6 +92,7 @@ class GameDetails extends PureComponent {
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&
+        // player.symbol === game.turn &&
         <div>It's your turn!</div>
       }
 
@@ -96,7 +107,9 @@ class GameDetails extends PureComponent {
 
       {
         winner &&
-        <p>Winner: {users[winner].firstName}</p>
+        // <p>Winner: {users[winner].firstName}</p>
+        // <p>Winner: {userId}</p>
+        <p>Winner: {winner}</p>
       }
 
       <hr />
