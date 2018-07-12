@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import {getGames, joinGame, updateGame} from '../../actions/games'
 import {getUsers} from '../../actions/users'
 import {userId} from '../../jwt'
@@ -31,14 +31,6 @@ class GameDetails extends PureComponent {
     )
 
     let winHolder = false
-
-    // game.players.filter(x => {return x.currentUser !== this.props.userId})[0].boatLocation.map(
-    //   (row, rowIndex) => row.map((cell, cellIndex) => {
-    //     if (rowIndex === toRow && cellIndex === toCell && cell === "b") return console.log( "you hit the boat!" )
-    //       // this.props.game.status = 'finished'  
-    //     else return cell
-    //   })
-    // )
     
     game.players.filter(x => {return x.currentUser !== this.props.userId})[0].boatLocation.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
@@ -47,13 +39,9 @@ class GameDetails extends PureComponent {
       })
     )
 
-    console.log('WIN?', winHolder)
-
     if (winHolder === true) {
       game.winner = this.props.userId
     }
-
-    console.log(game)
 
     updateGame(game.id, board, game.winner)
   }
@@ -61,11 +49,7 @@ class GameDetails extends PureComponent {
 
 
   render() {
-
     const {game, users, authenticated, userId} = this.props
-
-    // console.log('USER ID', userId)
-   
 
     if (!authenticated) return (
 			<Redirect to="/login" />
@@ -74,13 +58,9 @@ class GameDetails extends PureComponent {
     if (game === null || users === null) return 'Loading...'
     if (!game) return 'Not found'
 
-    const player = game.players.find(p => p.userId === userId)  
+    const player = game.players.find(p => p.id === userId)  
 
-    console.log('PLAYER',player)
-
-    // const winner = game.players
-    //   .filter(p => p.symbol === game.winner)
-    //   .map(p => p.userId)[0]
+    console.log('PLAYER', player)
 
     const winner = game.winner
 
@@ -92,11 +72,8 @@ class GameDetails extends PureComponent {
       {
         game.status === 'started' &&
         player && player.symbol === game.turn &&
-        // player.symbol === game.turn &&
         <div>It's your turn!</div>
       }
-
-
 
       {/* FIX SECTION SO ONLY PERSON WHO DIDNT START GAME CAN JOIN */}
       {
@@ -107,15 +84,19 @@ class GameDetails extends PureComponent {
 
       {
         winner &&
-        // <p>Winner: {users[winner].firstName}</p>
-        // <p>Winner: {userId}</p>
-        <p>Winner: {winner}</p>
+        <div id='winnerPopUp'>
+          <h2>The Battleship is sunk!</h2>
+          <h2>Player {winner} won the game!</h2>
+
+          <Link to="/games">All Games</Link>
+        </div>
       }
 
       <hr />
 
       {
         game.status !== 'pending' &&
+        winner === null &&
         <div>
           <Board board={ game.players.filter(x => {return x.currentUser === userId})[0].myBoard } makeMove={this.makeMove} />
           <br/>
