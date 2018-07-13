@@ -38,7 +38,7 @@ class GameDetails extends PureComponent {
     
     game.players.filter(x => {return x.currentUser !== this.props.userId})[0].boatLocation.map(
       (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell && cell === "b") return winHolder = true
+        if (rowIndex === toRow && cellIndex === toCell && cell === "⛵") return winHolder = true
         else return cell
       })
     )

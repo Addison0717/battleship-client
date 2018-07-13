@@ -7,8 +7,8 @@ const renderCel = (rowIndex, cellIndex, symbol) => {
       className="board-tile"
       disabled={true}
       key={`${rowIndex}-${cellIndex}`}
-    >{symbol || '-'}</button>
-  )
+    >{symbol || '🌊'}</button>
+  ) 
 }
 
 export default ({board, makeMove}) => board.map((cells, rowIndex) =>
