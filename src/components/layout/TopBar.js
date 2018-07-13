@@ -12,10 +12,10 @@ const TopBar = (props) => {
   const { location, history, user } = props
 
   return (
-    <AppBar position="absolute" style={{zIndex:10}}>
+    <AppBar position="absolute" style={{zIndex:10}} id="mainBar">
       <Toolbar>
         <Typography variant="title" color="inherit" style={{flex: 1}}>
-          Battleship!
+          Battleship
         </Typography>
         {
           user &&

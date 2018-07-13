@@ -1,3 +1,13 @@
-.login-form label {
+/* .login-form label {
   display: block;
+  padding: 10px;
+} */
+
+.textField {
+  display: block;
+  padding: 10px 50px 20px 50px;
+}
+
+#loginButton {
+  margin-top: 20px;
 }

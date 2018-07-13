@@ -26,3 +26,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#mainBar {
+  color: white;
+  background-color: #ff8282;
+  /* background-color: linear-gradient(to right, #ec4079 0%, #ec4079 10%, #00aa86 10%, #00aa86 30%, #004777 30%, #004777 70%, #00aa86 70%, #00aa86 90%, #ec4079 90%, #ec4079 100% ); */
+}
