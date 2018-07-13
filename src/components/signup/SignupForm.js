@@ -70,7 +70,7 @@ export default class SignupForm extends PureComponent {
   				</label> */}
 
 					<label className='textField'> <TextField
-          id="password-input"
+          id="confirm-password-input"
           label="Confirm Password"
 					type="password"
 					name="confirmPassword"
@@ -91,7 +91,7 @@ export default class SignupForm extends PureComponent {
 
   				{/* <button type="submit">Sign up</button> */}
 					<Button color="default" type="submit" id="signupButton">
-						Login
+						Sign Up
 					</Button>
   			</form>
       </div>
