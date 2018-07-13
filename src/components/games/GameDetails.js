@@ -64,9 +64,6 @@ class GameDetails extends PureComponent {
 
     const player = game.players.find(p => p.currentUser === userId)  
 
-    console.log('PLAYER', player)
-    console.log('GAME PLAYERS', game.players)
-
     const winner = game.winner
 
     return (<Paper className="outer-paper">
